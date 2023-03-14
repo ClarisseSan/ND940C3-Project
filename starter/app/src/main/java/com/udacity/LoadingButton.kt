@@ -2,15 +2,14 @@ package com.udacity
 
 import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Rect
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import kotlin.properties.Delegates
 
 private lateinit var frame: Rect
+private const val BUTTON_LABEL_OFFSET = 30
 
 class LoadingButton @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -27,18 +26,20 @@ class LoadingButton @JvmOverloads constructor(
     private val backgroundColor = ResourcesCompat.getColor(resources, R.color.colorPrimary, null)
     private val textColor = ResourcesCompat.getColor(resources, R.color.white, null)
 
+    // position variable which will be used to draw label and button position
+    private val pointPosition = PointF(0f,0f)
+
 
     // Set up the paint with which to draw.
-    private val paint = Paint().apply {
-        color = backgroundColor
-        // Smooths out edges of what is drawn without affecting shape.
-        isAntiAlias = true
-        // Dithering affects how colors with higher-precision than the device are down-sampled.
-        isDither = true
+    private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
         textAlign = Paint.Align.CENTER
-        textSize = 70f
-    }
+        textSize = 55f
+        typeface = Typeface.create("", Typeface.BOLD)
+        color = backgroundColor
+        // Dithering affects how colors with higher-precision than the device are down-sampled.
+        isDither = true
+}
 
 
     init {
@@ -52,7 +53,7 @@ class LoadingButton @JvmOverloads constructor(
 
         paint.color = textColor
         canvas?.drawText(
-            "Download", (width / 2).toFloat(), ((height + 25) / 2).toFloat(),
+            "Download", (width / 2).toFloat(), ((height + BUTTON_LABEL_OFFSET) / 2).toFloat(),
             paint
         )
     }
