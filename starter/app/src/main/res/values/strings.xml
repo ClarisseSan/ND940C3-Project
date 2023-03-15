@@ -23,4 +23,8 @@
     <string name="select_file">\"Please select the file to download\"</string>
     <string name="download_image">Download image</string>
     <string name="download">Download</string>
+    <string name="status">Status:</string>
+    <string name="file_name">File Name:</string>
+    <string name="failed">Failed</string>
+    <string name="success">Success</string>
 </resources>
