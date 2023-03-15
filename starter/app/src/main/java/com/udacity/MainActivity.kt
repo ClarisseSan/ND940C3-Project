@@ -97,7 +97,6 @@ class MainActivity : AppCompatActivity() {
             downloadID =
                 downloadManager.enqueue(request)// enqueue puts the download request in the queue.
 
-
         }
 
 
