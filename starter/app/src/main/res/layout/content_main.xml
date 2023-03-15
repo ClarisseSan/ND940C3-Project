@@ -18,10 +18,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_cloud_download"
         android:background="@color/colorPrimaryDark"
-        android:contentDescription="@string/download_banner"
+        android:contentDescription="@string/download_image"
         app:tint="@color/violet" />
 
     <RadioGroup
+        android:id="@+id/radio_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_size"
@@ -32,7 +33,7 @@
         <RadioButton
             android:id="@+id/radio_glide"
             style="@style/MyRadioButtonStyle"
-            android:text="@string/glide" />
+            android:text="@string/glide"/>
 
         <RadioButton
             android:id="@+id/radio_loadapp"

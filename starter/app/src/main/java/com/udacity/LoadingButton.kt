@@ -56,6 +56,7 @@ class LoadingButton @JvmOverloads constructor(
             "Download", (width / 2).toFloat(), ((height + BUTTON_LABEL_OFFSET) / 2).toFloat(),
             paint
         )
+
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
