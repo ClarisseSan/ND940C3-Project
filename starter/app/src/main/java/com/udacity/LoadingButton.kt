@@ -8,6 +8,7 @@ import android.content.Context
 import android.graphics.*
 import android.renderscript.Sampler.Value
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import kotlinx.android.synthetic.main.content_main.view.*
@@ -23,12 +24,11 @@ class LoadingButton @JvmOverloads constructor(
     private var heightSize = 0
 
     private lateinit var frame: Rect
-
-    private var progress = 0.0
-
+    var progress = 0.0
     private var buttonState: ButtonState by Delegates.observable(ButtonState.Completed) { p, old, new ->
 
     }
+
 
     //background and text colors
     private val backgroundColor = ResourcesCompat.getColor(resources, R.color.colorPrimary, null)

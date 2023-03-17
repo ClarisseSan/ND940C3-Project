@@ -20,7 +20,7 @@
     <string name="retrofit">Retrofit - Type-safe HTTP client for Android and Java by Square, Inc</string>
     <string name="retrofit_title">Retrofit</string>
     <string name="retrofit_description">Type-safe HTTP client for Android and Java by Square, Inc</string>
-    <string name="select_file">\"Please select the file to download\"</string>
+    <string name="select_file">Please select the file to download</string>
     <string name="download_image">Download image</string>
     <string name="download">Download</string>
     <string name="status">Status:</string>
