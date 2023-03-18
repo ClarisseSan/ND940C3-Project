@@ -13,8 +13,10 @@
         android:id="@+id/lbl_filename"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/textmargin_top"
         android:text="@string/file_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constrainedWidth="true"
         app:layout_constraintStart_toStartOf="@+id/lbl_status"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,17 +24,23 @@
         android:id="@+id/txt_filename"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/glide"
+        android:layout_margin="@dimen/textmargin_top"
+        tools:text="@string/glide"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constrainedWidth="true"
         app:layout_constraintBottom_toBottomOf="@+id/lbl_filename"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/lbl_filename" />
+        app:layout_constraintStart_toEndOf="@+id/lbl_filename"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/lbl_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/textmargin_top"
         android:text="@string/status"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constrainedWidth="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lbl_filename" />
 
@@ -40,7 +48,11 @@
         android:id="@+id/txt_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/success"
+        android:layout_marginTop="@dimen/textmargin_top"
+        tools:text="@string/success"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/holo_red_dark"
+        app:layout_constrainedWidth="true"
         app:layout_constraintBottom_toBottomOf="@+id/lbl_status"
         app:layout_constraintStart_toEndOf="@+id/lbl_status"
         app:layout_constraintStart_toStartOf="@+id/txt_filename" />

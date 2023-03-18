@@ -155,6 +155,7 @@ class MainActivity : AppCompatActivity() {
                 getString(R.string.check_status),
                 contentPendingIntent
             )
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
 
 
         notify(NOTIFICATION_ID, builder.build())
