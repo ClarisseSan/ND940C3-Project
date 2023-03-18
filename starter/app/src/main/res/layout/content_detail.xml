@@ -28,7 +28,6 @@
         tools:text="@string/glide"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constrainedWidth="true"
-        app:layout_constraintBottom_toBottomOf="@+id/lbl_filename"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/lbl_filename"
         app:layout_constraintTop_toTopOf="parent" />
