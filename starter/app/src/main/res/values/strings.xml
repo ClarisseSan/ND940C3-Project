@@ -27,4 +27,7 @@
     <string name="file_name">File Name:</string>
     <string name="failed">Failed</string>
     <string name="success">Success</string>
+    <string name="check_status">Check status</string>
+    <string name="download_status">Download Status</string>
+    <string name="is_downloaded">%1$s is downloaded</string>
 </resources>

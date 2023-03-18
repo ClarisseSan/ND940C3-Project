@@ -60,7 +60,6 @@ class MainActivity : AppCompatActivity() {
                     )
                 } as NotificationManager
                 notificationManager.sendNotification(getString(R.string.download), context)
-
                 createChannel(
                     CHANNEL_ID,
                     CHANNEL_NAME
@@ -135,12 +134,27 @@ class MainActivity : AppCompatActivity() {
         applicationContext: Context
     ) {
 
+        //open activity when user clicked on notification
+        val contentIntent = Intent(applicationContext, DetailActivity::class.java)
+        val contentPendingIntent = PendingIntent.getActivity(
+            applicationContext,
+            NOTIFICATION_ID,
+            contentIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
         //get instance of Notification Builder
         val builder = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
             //set the notification details
             .setSmallIcon(R.drawable.ic_assistant_black_24dp)
             .setContentTitle(downloadTitle)
-            .setContentText(downloadDescription + " is downloaded")
+            .setContentText(getString(R.string.is_downloaded, downloadDescription))
+            .setAutoCancel(true)
+            .addAction(
+                R.drawable.ic_assistant_black_24dp,
+                getString(R.string.check_status),
+                contentPendingIntent
+            )
 
 
         notify(NOTIFICATION_ID, builder.build())
@@ -158,7 +172,7 @@ class MainActivity : AppCompatActivity() {
             notificationChannel.enableLights(true)
             notificationChannel.lightColor = Color.RED
             notificationChannel.enableVibration(true)
-            notificationChannel.description = "Download Status"
+            notificationChannel.description = getString(R.string.download_status)
 
             //get instance of NotificationManager
             notificationManager = getSystemService(NotificationManager::class.java)
