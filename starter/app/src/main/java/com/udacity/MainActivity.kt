@@ -28,7 +28,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var notificationManager: NotificationManager
     private lateinit var pendingIntent: PendingIntent
+    private lateinit var contentIntent: Intent
     private lateinit var action: NotificationCompat.Action
+    private lateinit var downloadManager: DownloadManager
     private var downloadUrl = ""
     private var downloadTitle = ""
     private var downloadDescription = ""
@@ -59,11 +61,36 @@ class MainActivity : AppCompatActivity() {
                         NotificationManager::class.java
                     )
                 } as NotificationManager
-                notificationManager.sendNotification(getString(R.string.download), context)
+
+
+                //get download status is success or failed using DownloadManager.Query
+                val query = DownloadManager.Query()
+                query.setFilterById(id)
+                val cursor = downloadManager.query(query)
+                if (cursor.moveToFirst()) {
+                    val status = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_STATUS))
+                    when (status) {
+                        DownloadManager.STATUS_SUCCESSFUL -> {
+                            notificationManager.sendNotification(
+                                getString(R.string.success),
+                                context
+                            )
+                        }
+                        DownloadManager.STATUS_FAILED -> {
+                            notificationManager.sendNotification(
+                                getString(R.string.failed),
+                                context
+                            )
+                        }
+                    }
+                }
+
+                //create Notification Channel
                 createChannel(
-                    CHANNEL_ID,
-                    CHANNEL_NAME
+                    getString(CHANNEL_ID),
+                    getString(CHANNEL_NAME)
                 )
+
             }
         }
     }
@@ -97,7 +124,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            Toast.makeText(this, downloadUrl, Toast.LENGTH_LONG).show()
 
             val request = DownloadManager.Request(Uri.parse(downloadUrl))
                 .setTitle(downloadTitle)
@@ -107,7 +133,7 @@ class MainActivity : AppCompatActivity() {
                 .setAllowedOverRoaming(true)
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
 
-            val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+            downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
             downloadID =
                 downloadManager.enqueue(request)// enqueue puts the download request in the queue.
 
@@ -123,8 +149,8 @@ class MainActivity : AppCompatActivity() {
             "https://github.com/bumptech/glide/archive/refs/heads/master.zip"
         private const val URL_RETROFIT =
             "https://github.com/square/retrofit/archive/refs/heads/master.zip"
-        private const val CHANNEL_ID = "channelId"
-        private const val CHANNEL_NAME = "Download Status"
+        private const val CHANNEL_ID = R.string.channelId
+        private const val CHANNEL_NAME = R.string.download_status
         private const val NOTIFICATION_ID = 0
     }
 
@@ -135,8 +161,13 @@ class MainActivity : AppCompatActivity() {
     ) {
 
         //open activity when user clicked on notification
-        val contentIntent = Intent(applicationContext, DetailActivity::class.java)
-        val contentPendingIntent = PendingIntent.getActivity(
+        contentIntent = Intent(applicationContext, DetailActivity::class.java)
+        contentIntent.putExtra(getString(R.string.intent_status), messageBody)
+        contentIntent.putExtra(
+            getString(R.string.intent_filename),
+            "$downloadTitle - $downloadDescription"
+        )
+        pendingIntent = PendingIntent.getActivity(
             applicationContext,
             NOTIFICATION_ID,
             contentIntent,
@@ -144,16 +175,17 @@ class MainActivity : AppCompatActivity() {
         )
 
         //get instance of Notification Builder
-        val builder = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
+        val builder = NotificationCompat.Builder(applicationContext, getString(CHANNEL_ID))
             //set the notification details
             .setSmallIcon(R.drawable.ic_assistant_black_24dp)
             .setContentTitle(downloadTitle)
             .setContentText(getString(R.string.is_downloaded, downloadDescription))
             .setAutoCancel(true)
+            .setContentIntent(pendingIntent)
             .addAction(
                 R.drawable.ic_assistant_black_24dp,
                 getString(R.string.check_status),
-                contentPendingIntent
+                pendingIntent
             )
             .setPriority(NotificationCompat.PRIORITY_HIGH)
 
@@ -169,11 +201,14 @@ class MainActivity : AppCompatActivity() {
                 NotificationManager.IMPORTANCE_HIGH
             )
 
+            notificationChannel.apply {
+                enableLights(true)
+                lightColor = Color.RED
+                enableVibration(true)
+                description = getString(R.string.download_status)
+                setShowBadge(false)
+            }
 
-            notificationChannel.enableLights(true)
-            notificationChannel.lightColor = Color.RED
-            notificationChannel.enableVibration(true)
-            notificationChannel.description = getString(R.string.download_status)
 
             //get instance of NotificationManager
             notificationManager = getSystemService(NotificationManager::class.java)

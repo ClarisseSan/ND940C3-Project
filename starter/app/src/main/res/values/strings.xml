@@ -30,4 +30,7 @@
     <string name="check_status">Check status</string>
     <string name="download_status">Download Status</string>
     <string name="is_downloaded">%1$s is downloaded</string>
+    <string name="intent_status" translatable="false">Status</string>
+    <string name="intent_filename" translatable="false">File Name</string>
+    <string name="channelId" translatable="false">channelId</string>
 </resources>

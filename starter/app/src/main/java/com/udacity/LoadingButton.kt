@@ -67,6 +67,7 @@ class LoadingButton @JvmOverloads constructor(
 
         //invalidates the entire view, forcing a call to onDraw() to redraw the view
         invalidate()
+        requestLayout()
 
         return true
     }
@@ -143,6 +144,7 @@ class LoadingButton @JvmOverloads constructor(
         valueAnimator.addUpdateListener { animation ->
             progress = (animation.animatedValue as Float).toDouble()
             invalidate()
+            requestLayout()
         }
 
         valueAnimator.addListener(object : AnimatorListenerAdapter() {
