@@ -11,6 +11,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.content.withStyledAttributes
 import kotlinx.android.synthetic.main.content_main.view.*
 import kotlin.properties.Delegates
 
@@ -22,6 +23,10 @@ class LoadingButton @JvmOverloads constructor(
 ) : View(context, attrs, defStyleAttr) {
     private var widthSize = 0
     private var heightSize = 0
+
+    //declare variables to cache the attribute values
+    private var loadingBackgroundColor = 0
+    private var normalBackgroundColor = 0
 
     private lateinit var frame: Rect
     var progress = 0.0
@@ -53,6 +58,12 @@ class LoadingButton @JvmOverloads constructor(
 
         // Setting the view's isClickable property to true enables that view to accept user input.
         isClickable = true
+
+        //get styled attributes
+        context.withStyledAttributes(attrs, R.styleable.LoadingButton){
+            loadingBackgroundColor = getColor(R.styleable.LoadingButton_loadingBackgroundColor, loadingColor)
+            normalBackgroundColor = getColor(R.styleable.LoadingButton_normalBackgroundColor, backgroundColor)
+        }
     }
 
     override fun performClick(): Boolean {
@@ -76,11 +87,11 @@ class LoadingButton @JvmOverloads constructor(
         super.onDraw(canvas)
 
         //draw Button
-        paint.color = backgroundColor
+        paint.color = normalBackgroundColor
         canvas?.drawRect(frame, paint)
 
         if (buttonState == ButtonState.Loading) {
-            paint.color = loadingColor
+            paint.color = loadingBackgroundColor
             canvas?.drawRect(
                 0f, 0f,
                 (width * (progress / 100)).toFloat(), height.toFloat(), paint
@@ -140,7 +151,7 @@ class LoadingButton @JvmOverloads constructor(
     private fun showAnimation() {
         val valueAnimator = ValueAnimator.ofFloat(0f, width.toFloat())
 
-        valueAnimator.duration = 5000
+        valueAnimator.duration = 3000
         valueAnimator.addUpdateListener { animation ->
             progress = (animation.animatedValue as Float).toDouble()
             invalidate()

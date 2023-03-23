@@ -13,7 +13,7 @@
             android:scaleY="1.0"
             android:visibility="invisible"
             app:layout_constrainedWidth="true"
-            app:layout_constraintBottom_toBottomOf="@+id/lbl_status"
+            app:layout_constraintTop_toBottomOf="@+id/txt_filename"
             app:layout_constraintStart_toEndOf="@+id/lbl_status"
             app:layout_constraintStart_toStartOf="@+id/txt_filename" />
     </ConstraintSet>
@@ -28,7 +28,9 @@
             android:scaleY="2.0"
             android:visibility="visible"
             app:layout_constrainedWidth="true"
-            app:layout_constraintBottom_toBottomOf="@+id/lbl_status"
+            app:layout_constrainedHeight="true"
+            android:layout_marginTop="@dimen/textmargin_top"
+            app:layout_constraintTop_toBottomOf="@+id/txt_filename"
             app:layout_constraintStart_toEndOf="@+id/lbl_status"
             app:layout_constraintStart_toStartOf="@+id/txt_filename" />
     </ConstraintSet>
