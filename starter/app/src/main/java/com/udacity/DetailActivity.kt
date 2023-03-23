@@ -2,7 +2,9 @@ package com.udacity
 
 import android.app.NotificationManager
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NavUtils
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.content_detail.*
@@ -16,10 +18,14 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 
         //delete current notification
-        val notificationManager = ContextCompat.getSystemService(applicationContext, NotificationManager::class.java) as NotificationManager
+        val notificationManager = ContextCompat.getSystemService(
+            applicationContext,
+            NotificationManager::class.java
+        ) as NotificationManager
         notificationManager.cancelAll()
 
         //get extras from intent
@@ -37,6 +43,14 @@ class DetailActivity : AppCompatActivity() {
             txt_status.setTextColor(getColor(R.color.red))
         }
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.home) {
+            NavUtils.navigateUpFromSameTask(this)
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }
