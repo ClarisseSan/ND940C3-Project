@@ -81,13 +81,17 @@ class MainActivity : AppCompatActivity() {
                                 getString(R.string.success),
                                 context
                             )
+                            custom_button.buttonState = ButtonState.Completed
                         }
                         DownloadManager.STATUS_FAILED -> {
                             notificationManager.sendNotification(
                                 getString(R.string.failed),
                                 context
                             )
+                            custom_button.buttonState = ButtonState.Completed
                         }
+
+
                     }
                 }
 
@@ -109,6 +113,8 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, getString(R.string.select_file), Toast.LENGTH_LONG).show()
         } else {
 
+
+            custom_button.buttonState = ButtonState.Loading
 
             val selectedRadio: RadioButton = findViewById(checkedID)
             when (selectedRadio.getId()) {

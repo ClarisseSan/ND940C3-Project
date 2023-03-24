@@ -31,9 +31,21 @@ class LoadingButton @JvmOverloads constructor(
     private lateinit var frame: Rect
     var progress = 0.0
 
-    private lateinit var valueAnimator: ValueAnimator
-    private var buttonState: ButtonState by Delegates.observable(ButtonState.Completed) { p, old, new ->
+    private var valueAnimator = ValueAnimator()
+     var buttonState: ButtonState by Delegates.observable(ButtonState.Completed) { p, old, new ->
 
+        when(new){
+            ButtonState.Loading -> {
+                showAnimation()
+            }
+
+            ButtonState.Completed -> {
+                hasDownloadCompleted()
+            }
+            else -> {
+                hasDownloadCompleted()
+            }
+        }
     }
 
 
@@ -68,21 +80,21 @@ class LoadingButton @JvmOverloads constructor(
         }
     }
 
-    override fun performClick(): Boolean {
-        super.performClick()
-
-        buttonState = ButtonState.Loading
-
-        if (buttonState == ButtonState.Loading) {
-            showAnimation()
-        }
-
-        //invalidates the entire view, forcing a call to onDraw() to redraw the view
-        invalidate()
-        requestLayout()
-
-        return true
-    }
+//    override fun performClick(): Boolean {
+//        super.performClick()
+//
+//        buttonState = ButtonState.Loading
+//
+//        if (buttonState == ButtonState.Loading) {
+//            showAnimation()
+//        }
+//
+//        //invalidates the entire view, forcing a call to onDraw() to redraw the view
+//        invalidate()
+//        requestLayout()
+//
+//        return true
+//    }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
@@ -153,6 +165,7 @@ class LoadingButton @JvmOverloads constructor(
 
         valueAnimator.duration = 3000
 
+        valueAnimator.repeatCount = ValueAnimator.INFINITE
         valueAnimator.repeatMode = ValueAnimator.RESTART
 
         valueAnimator.addUpdateListener { animation ->
@@ -169,11 +182,18 @@ class LoadingButton @JvmOverloads constructor(
 
             override fun onAnimationEnd(animation: Animator?) {
                 super.onAnimationEnd(animation)
-                buttonState = ButtonState.Completed
-                isEnabled = true
             }
         })
         valueAnimator.start()
+    }
+
+
+    private fun hasDownloadCompleted(){
+        valueAnimator.removeAllUpdateListeners()
+        valueAnimator.cancel()
+        buttonState = ButtonState.Completed
+        invalidate()
+        requestLayout()
     }
 
 
