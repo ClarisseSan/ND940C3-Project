@@ -2,17 +2,13 @@ package com.udacity
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.*
-import android.renderscript.Sampler.Value
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.content.withStyledAttributes
-import kotlinx.android.synthetic.main.content_main.view.*
 import kotlin.properties.Delegates
 
 
@@ -32,9 +28,9 @@ class LoadingButton @JvmOverloads constructor(
     var progress = 0.0
 
     private var valueAnimator = ValueAnimator()
-     var buttonState: ButtonState by Delegates.observable(ButtonState.Completed) { p, old, new ->
+    var buttonState: ButtonState by Delegates.observable(ButtonState.Completed) { p, old, new ->
 
-        when(new){
+        when (new) {
             ButtonState.Loading -> {
                 showAnimation()
             }
@@ -74,9 +70,11 @@ class LoadingButton @JvmOverloads constructor(
         isClickable = true
 
         //get styled attributes
-        context.withStyledAttributes(attrs, R.styleable.LoadingButton){
-            loadingBackgroundColor = getColor(R.styleable.LoadingButton_loadingBackgroundColor, loadingColor)
-            normalBackgroundColor = getColor(R.styleable.LoadingButton_normalBackgroundColor, backgroundColor)
+        context.withStyledAttributes(attrs, R.styleable.LoadingButton) {
+            loadingBackgroundColor =
+                getColor(R.styleable.LoadingButton_loadingBackgroundColor, loadingColor)
+            normalBackgroundColor =
+                getColor(R.styleable.LoadingButton_normalBackgroundColor, backgroundColor)
         }
     }
 
@@ -188,7 +186,7 @@ class LoadingButton @JvmOverloads constructor(
     }
 
 
-    private fun hasDownloadCompleted(){
+    private fun hasDownloadCompleted() {
         valueAnimator.removeAllUpdateListeners()
         valueAnimator.cancel()
         buttonState = ButtonState.Completed
