@@ -40,7 +40,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+
         registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+
+        //create Notification Channel
+        createChannel(
+            getString(CHANNEL_ID),
+            getString(CHANNEL_NAME)
+        )
 
         custom_button.setOnClickListener {
             download()
@@ -69,6 +76,7 @@ class MainActivity : AppCompatActivity() {
                 } as NotificationManager
 
 
+
                 //get download status is success or failed using DownloadManager.Query
                 val query = DownloadManager.Query()
                 query.setFilterById(id)
@@ -95,11 +103,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                //create Notification Channel
-                createChannel(
-                    getString(CHANNEL_ID),
-                    getString(CHANNEL_NAME)
-                )
+
 
             }
         }
