@@ -159,6 +159,7 @@ class LoadingButton @JvmOverloads constructor(
     }
 
     private fun showAnimation() {
+
         valueAnimator = ValueAnimator.ofFloat(0f, width.toFloat())
 
         valueAnimator.duration = 3000
@@ -180,6 +181,7 @@ class LoadingButton @JvmOverloads constructor(
 
             override fun onAnimationEnd(animation: Animator?) {
                 super.onAnimationEnd(animation)
+                isEnabled = true
             }
         })
         valueAnimator.start()
@@ -189,7 +191,6 @@ class LoadingButton @JvmOverloads constructor(
     private fun hasDownloadCompleted() {
         valueAnimator.removeAllUpdateListeners()
         valueAnimator.cancel()
-        buttonState = ButtonState.Completed
         invalidate()
         requestLayout()
     }

@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
 
         custom_button.setOnClickListener {
             download()
+            Toast.makeText(this, "napindot", Toast.LENGTH_SHORT)
         }
 
 
