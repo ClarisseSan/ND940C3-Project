@@ -78,21 +78,6 @@ class LoadingButton @JvmOverloads constructor(
         }
     }
 
-//    override fun performClick(): Boolean {
-//        super.performClick()
-//
-//        buttonState = ButtonState.Loading
-//
-//        if (buttonState == ButtonState.Loading) {
-//            showAnimation()
-//        }
-//
-//        //invalidates the entire view, forcing a call to onDraw() to redraw the view
-//        invalidate()
-//        requestLayout()
-//
-//        return true
-//    }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
@@ -162,7 +147,7 @@ class LoadingButton @JvmOverloads constructor(
 
         valueAnimator = ValueAnimator.ofFloat(0f, width.toFloat())
 
-        valueAnimator.duration = 3000
+        valueAnimator.duration = 2000
 
         valueAnimator.repeatCount = ValueAnimator.INFINITE
         valueAnimator.repeatMode = ValueAnimator.RESTART
