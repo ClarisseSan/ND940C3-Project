@@ -41,17 +41,19 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
 
-        registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
-
         //create Notification Channel
         createChannel(
             getString(CHANNEL_ID),
             getString(CHANNEL_NAME)
         )
 
+        //register broadcast receiver
+        registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+
+
+
         custom_button.setOnClickListener {
             download()
-            Toast.makeText(this, "napindot", Toast.LENGTH_SHORT)
         }
 
 
