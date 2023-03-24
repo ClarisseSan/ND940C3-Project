@@ -46,6 +46,12 @@ class MainActivity : AppCompatActivity() {
             download()
         }
 
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(receiver)
     }
 
 

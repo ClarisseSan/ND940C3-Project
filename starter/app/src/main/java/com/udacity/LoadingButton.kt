@@ -30,6 +30,8 @@ class LoadingButton @JvmOverloads constructor(
 
     private lateinit var frame: Rect
     var progress = 0.0
+
+    private lateinit var valueAnimator: ValueAnimator
     private var buttonState: ButtonState by Delegates.observable(ButtonState.Completed) { p, old, new ->
 
     }
@@ -75,7 +77,6 @@ class LoadingButton @JvmOverloads constructor(
             showAnimation()
         }
 
-
         //invalidates the entire view, forcing a call to onDraw() to redraw the view
         invalidate()
         requestLayout()
@@ -96,7 +97,6 @@ class LoadingButton @JvmOverloads constructor(
                 0f, 0f,
                 (width * (progress / 100)).toFloat(), height.toFloat(), paint
             )
-
 
             //save the state the canvas is in
             canvas?.save()
@@ -149,9 +149,12 @@ class LoadingButton @JvmOverloads constructor(
     }
 
     private fun showAnimation() {
-        val valueAnimator = ValueAnimator.ofFloat(0f, width.toFloat())
+        valueAnimator = ValueAnimator.ofFloat(0f, width.toFloat())
 
         valueAnimator.duration = 3000
+
+        valueAnimator.repeatMode = ValueAnimator.RESTART
+
         valueAnimator.addUpdateListener { animation ->
             progress = (animation.animatedValue as Float).toDouble()
             invalidate()
